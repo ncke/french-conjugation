@@ -194,13 +194,13 @@ class Verbe:
 
 # Liste de verbes.
 
-tres_irregular = [
+verbes_irregular = [
     Verbe("aller", "to go", AllerPresent()),
     Verbe("avoir", "to have", AvoirPresent()),
     Verbe("être", "to be", EtrePresent()),
 ]
 
-tout_verbes = tres_irregular + [
+verbes_regular = [
     Verbe("abolir", "to abolish", RegularPresentIR()),
     Verbe("accepter", "to accept", RegularPresentER()),
     Verbe("accomplir", "to accomplish", RegularPresentIR()),
@@ -325,17 +325,18 @@ tout_verbes = tres_irregular + [
 
 class Jeu:
 
-    def __init__(self, verbes, temps):
+    def __init__(self, groupes_verbes, temps):
         self.score = 0
         self.attempts = 0
-        self.verbes = verbes
+        self.groupes_verbes = groupes_verbes
         self.temps = temps
 
     def tempRandom(self):
         return random.choice(self.temps)
     
     def verbeRandom(self):
-        return random.choice(self.verbes)
+        groupe = random.choice(self.groupes_verbes)
+        return random.choice(groupe)
     
     def pronomRandom(self):
         return random.choice([
@@ -379,7 +380,7 @@ class Jeu:
             self.traductionRandom()
 
 def main() -> int:
-    jeu = Jeu(tout_verbes, [Temps.PRESENT])
+    jeu = Jeu([verbes_regular, verbes_irregular], [Temps.PRESENT])
     jeu.joue()
     return 0
 
